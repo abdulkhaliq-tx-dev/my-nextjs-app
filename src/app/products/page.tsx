@@ -1,7 +1,6 @@
 "use client";
 
 import useApi from "@/hooks/useApi";
-
 import Image from "next/image";
 
 export default function Page() {
@@ -31,25 +30,22 @@ export default function Page() {
               >
                 <div className="bg-slate-100 rounded-lg m-h-64 p-2 transform hover:translate-y-2 hover:shadow-xl transition duration-300 shadow-xl">
                   <figure className="mb-2">
-                    <img
-                      src={
-                        Array.isArray(product.images)
-                          ? product.images[0]
-                          : product.images
-                      }
+                    <Image
+                      src={product.image}
+                      layout="responsive"
+                      loading="lazy"
                       alt={product.name}
                       className="h-64 ml-auto mr-auto"
-                      
+                      width={500}
+                      height={250}
                     />
                   </figure>
                   <div className="rounded-lg p-4 bg-gray-600 flex flex-col">
                     <div>
-                      <h5 className="text-white text-2xl font-bold leading-none">
-                        {product.name}
+                      <h5 className="text-white text-xl font-bold leading-none">
+                        {product.title}
                       </h5>
-                      <span className="text-xs text-gray-400 leading-none">
-                        {product.description}
-                      </span>
+                      <span className="text-xs text-gray-400 leading-none"></span>
                     </div>
                     <div className="flex items-center">
                       <div className="text-lg text-white font-light">

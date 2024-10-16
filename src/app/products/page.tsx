@@ -1,11 +1,31 @@
 "use client";
 
+import { useState } from "react";
 import useApi from "@/hooks/useApi";
-import Image from "next/image";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import Loading from "@/app/loading";
+
+const categories = [
+  { name: "Jewelry", endpoint: "/products/category/jewelery" },
+  { name: "Electronics", endpoint: "/products/category/electronics" },
+  { name: "Women", endpoint: "/products/category/women's clothing" },
+  { name: "Men", endpoint: "/products/category/men's clothing" },
+  // Add more categories as needed
+];
 
 export default function Page() {
-  const { data, error, loading } = useApi("/products");
-  if (loading) return <p>Loading...</p>;
+  const [selectedCategory, setSelectedCategory] = useState(
+    categories[0].endpoint
+  );
+  const { data, error, loading } = useApi(selectedCategory);
+
+  if (loading)
+    return (
+      <div className="text-center flex justify-center items-center h-screen w-full">
+        <Loading />
+      </div>
+    );
+
   if (error)
     return (
       <p>Error fetching products: {error.message || "Something went wrong"}</p>
@@ -17,10 +37,21 @@ export default function Page() {
     <>
       <div className="flex items-center w-screen">
         <div className="container ml-auto mr-auto flex flex-wrap items-start">
-          <div className="w-full pl-5 lg:pl-2 mb-4 mt-4">
+          <div className="w-full pl-5 lg:pl-2 mb-4 mt-4 flex justify-between ">
             <h1 className="text-3xl lg:text-4xl text-gray-700 font-extrabold">
               Best Sellers
             </h1>
+            <div className="flex space-x-4 mb-4">
+              {categories.map((category) => (
+                <button
+                  key={category.name}
+                  className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-600 transition"
+                  onClick={() => setSelectedCategory(category.endpoint)}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
           </div>
           {products &&
             products.map((product) => (
@@ -30,14 +61,10 @@ export default function Page() {
               >
                 <div className="bg-slate-100 rounded-lg m-h-64 p-2 transform hover:translate-y-2 hover:shadow-xl transition duration-300 shadow-xl">
                   <figure className="mb-2">
-                    <Image
+                    <LazyLoadImage
                       src={product.image}
-                      layout="responsive"
-                      loading="lazy"
                       alt={product.name}
                       className="h-64 ml-auto mr-auto"
-                      width={500}
-                      height={250}
                     />
                   </figure>
                   <div className="rounded-lg p-4 bg-gray-600 flex flex-col">

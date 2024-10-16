@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "./axiosInstance";
 
-const useApi = (url, options = {}) => {
+const useApi = (url) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ const useApi = (url, options = {}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(url, options);
+        const response = await axiosInstance.get(url);
         setData(response.data);
       } catch (err) {
         setError(err);
@@ -21,7 +21,7 @@ const useApi = (url, options = {}) => {
       }
     };
     fetchData();
-  }, [url, options]);
+  }, [url]);
 
   return { data, loading, error };
 };

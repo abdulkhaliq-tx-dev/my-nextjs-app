@@ -28,12 +28,12 @@ export default function Navbar() {
               >
                 Products
               </Link>
-              <a
-                href="#_"
+              <Link
+                href="/category"
                 className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"
               >
-                Pricing
-              </a>
+              Category
+              </Link>
               <a
                 href="#_"
                 className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"

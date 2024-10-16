@@ -5,26 +5,26 @@ export default function ProductModal({ closeModal, product }) {
     <>
       <figure className="max-w-80 md:w-80 lg:w-96 md:self-start grow-0">
         <img
-          src={product.image} // Use dynamic image source
-          alt={product.title} // Use dynamic alt text
+          src={product.image} 
+          alt={product.title} 
           className="w-80 h-auto md:w-80 grow-0 hover:scale-105 transition duration-150"
         />
       </figure>
       <div className="flex flex-col gap-y-8 items-center md:items-start">
         <div className="flex flex-col items-center md:items-start gap-y-3">
           <span className="px-4 py-2 bg-slate-900 self-start text-white text-sm tracking-wider rounded-full">
-            {product.category} {/* Use dynamic category */}
+            {product.category}
           </span>
           <h2 className="text-xl text-center md:text-left font-semibold font-sans text-slate-800">
-            {product.title} {/* Display product title */}
+            {product.title} 
           </h2>
         </div>
         <div className="flex flex-col items-center md:items-start gap-y-3">
           <span className="text-lg decoration-2 decoration-black line-through text-slate-600 font-semibold">
-            ${product.originalPrice} {/* Display original price dynamically */}
+            ${product.originalPrice} 
           </span>
           <span className="text-5xl font-sans font-bold text-slate-800">
-            ${product.price} {/* Display discounted price dynamically */}
+            ${product.price} 
           </span>
           <p className="text-slate-500 text-sm text-center md:text-left font-sans">
             Offer valid till 17th October, or until stock lasts

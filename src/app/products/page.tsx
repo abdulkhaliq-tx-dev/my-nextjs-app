@@ -16,7 +16,7 @@ const categories = [
 ];
 
 export default function Page() {
-  // modal open and close
+  
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null); 
 
@@ -82,7 +82,7 @@ export default function Page() {
               <div
                 key={product.id}
                 className="w-full md:w-1/2 lg:w-1/4 pl-5 pr-5 mb-5 lg:pl-2 lg:pr-2"
-                onClick={() => openModal(product)} // Pass the selected product
+                onClick={() => openModal(product)} 
               >
                 <div className="bg-slate-100 rounded-lg m-h-64 p-2 transform hover:translate-y-2 hover:shadow-xl transition duration-300 shadow-xl">
                   <figure className="mb-2">

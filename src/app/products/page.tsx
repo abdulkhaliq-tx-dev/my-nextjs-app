@@ -4,20 +4,29 @@ import { useState } from "react";
 import useApi from "@/hooks/useApi";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Loading from "@/app/loading";
+import Searchbar from "@/components/common/Searchbar";
 
 const categories = [
   { name: "Jewelry", endpoint: "/products/category/jewelery" },
   { name: "Electronics", endpoint: "/products/category/electronics" },
   { name: "Women", endpoint: "/products/category/women's clothing" },
   { name: "Men", endpoint: "/products/category/men's clothing" },
-  // Add more categories as needed
 ];
 
 export default function Page() {
   const [selectedCategory, setSelectedCategory] = useState(
     categories[0].endpoint
   );
-  const { data, error, loading } = useApi(selectedCategory);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const endpoint = searchTerm ? "/products" : selectedCategory;
+  const { data, error, loading } = useApi(endpoint);
+
+  const filteredProducts = searchTerm
+    ? data?.filter((product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      ) || []
+    : data || [];
 
   if (loading)
     return (
@@ -31,13 +40,11 @@ export default function Page() {
       <p>Error fetching products: {error.message || "Something went wrong"}</p>
     );
 
-  const products = Array.isArray(data) ? data : data?.products || [];
-
   return (
     <>
       <div className="flex items-center w-screen">
         <div className="container ml-auto mr-auto flex flex-wrap items-start">
-          <div className="w-full pl-5 lg:pl-2 mb-4 mt-4 flex justify-between ">
+          <div className="w-full pl-5 lg:pl-2 mb-4 mt-4 flex justify-between">
             <h1 className="text-3xl lg:text-4xl text-gray-700 font-extrabold">
               Best Sellers
             </h1>
@@ -51,10 +58,11 @@ export default function Page() {
                   {category.name}
                 </button>
               ))}
+              <Searchbar setSearchTerm={setSearchTerm} />
             </div>
           </div>
-          {products &&
-            products.map((product) => (
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
               <div
                 key={product.id}
                 className="w-full md:w-1/2 lg:w-1/4 pl-5 pr-5 mb-5 lg:pl-2 lg:pr-2"
@@ -104,7 +112,10 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No products found</p>
+          )}
         </div>
       </div>
     </>
